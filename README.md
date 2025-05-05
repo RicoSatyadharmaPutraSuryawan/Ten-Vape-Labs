@@ -1,4 +1,4 @@
-# 🚬 Ten Vape Labs - Omnichannel CRM System
+# 🚬 TVL TRACK (Ten Vape Labs) - Omnichannel CRM System
 
 **Final Project - Pemrograman Berorientasi Objek (PBO) C**  
 👨‍🏫 *Dosen Pengampu: Fawwaz Ali Akbar, S.Kom., M.Kom*  
@@ -8,7 +8,7 @@
 
 ## 🔍 Deskripsi Proyek
 
-**Ten Vape Labs** adalah aplikasi **CRM Desktop berbasis Java** yang dirancang untuk mendukung pengelolaan pelanggan dan transaksi pada bisnis retail vape melalui pendekatan **Omnichannel**. Sistem ini dibangun dengan arsitektur OOP (Object-Oriented Programming) serta menyediakan fitur yang lengkap untuk mendukung aktivitas manajemen pelanggan, penjualan, dan integrasi komunikasi digital.
+**TVL TRACK** adalah aplikasi **CRM Desktop berbasis Java** yang dirancang untuk mendukung pengelolaan pelanggan dan transaksi pada bisnis retail Ten Vape Labs melalui pendekatan **Omnichannel**. Sistem ini dibangun dengan arsitektur OOP (Object-Oriented Programming) serta menyediakan fitur yang lengkap untuk mendukung aktivitas manajemen pelanggan, penjualan, dan integrasi komunikasi digital.
 
 ---
 
