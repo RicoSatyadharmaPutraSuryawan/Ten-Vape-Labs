@@ -74,7 +74,7 @@
 
 ## 👥 Tim Pengembang (Kelompok 8)
 
-| Nama                          | NIM           |
+| Nama                          | NPM           |
 |-------------------------------|---------------|
 | Irsyaad Nur Wicaksana         | 23081010241   |
 | Faydzaki Ananta Putra         | 23081010244   |
