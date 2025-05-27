@@ -151,7 +151,7 @@ public class Login extends javax.swing.JFrame {
                     if (rs.next()) {
                         String role = rs.getString("role");
                         if (role.equalsIgnoreCase("superadmin")) {
-                            new SuperAdminDashboard(username).setVisible(true);
+                            new SuperAdminHome(username).setVisible(true);
                         } else {
                             new MainDashboard(username).setVisible(true);
                         }
