@@ -1,9 +1,9 @@
-package tenvapelabs;
+package com.mycompany.tenvappelabs;
 import java.awt.Component;
-import view.menuDashboard;
-import view.inbox;
-import view.customer;
-import view.promosi;
+import com.mycompany.tenvappelabs.view.menuDashboard;
+import com.mycompany.tenvappelabs.view.inbox;
+import com.mycompany.tenvappelabs.view.customer;
+import com.mycompany.tenvappelabs.view.promosi;
 public class DashboardAdmin extends javax.swing.JFrame {
 
     /**
@@ -36,7 +36,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         panel_utama = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1366, 768));
 
         panel_kiri.setBackground(new java.awt.Color(0, 102, 102));
 
