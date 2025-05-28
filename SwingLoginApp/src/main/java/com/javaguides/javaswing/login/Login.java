@@ -153,7 +153,7 @@ public class Login extends javax.swing.JFrame {
                         if (role.equalsIgnoreCase("superadmin")) {
                             new SuperAdminHome(username).setVisible(true);
                         } else {
-                            new MainDashboard(username).setVisible(true);
+                            new AdminHome(username).setVisible(true);
                         }
                         dispose();
                     } else {

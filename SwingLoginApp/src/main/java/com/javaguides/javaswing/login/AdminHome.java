@@ -10,20 +10,20 @@ import javax.swing.JOptionPane;
  *
  * @author faydz
  */
-public class SuperAdminHome extends javax.swing.JFrame {
-    /**
-     * Creates new form SuperAdminHome
-     */
-    public SuperAdminHome(String username) {
-    initComponents();
-    setLocationRelativeTo(null);
-    usrlabel.setText("Hi, " + username + "!");
-}
+public class AdminHome extends javax.swing.JFrame {
 
-    private SuperAdminHome() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    /**
+     * Creates new form AdminHome
+     */
+    public AdminHome(String username) {
+        initComponents();
+        setLocationRelativeTo(null);
+        usrlabel.setText("Hi, " + username + "!");
     }
 
+    private AdminHome() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,14 +36,12 @@ public class SuperAdminHome extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        logoutBtn = new javax.swing.JButton();
         usrlabel = new javax.swing.JLabel();
-        broadcastBtn = new javax.swing.JButton();
-        persetujuanBtn = new javax.swing.JButton();
-        userBtn = new javax.swing.JButton();
+        logoutBtn = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         dataBtn = new javax.swing.JButton();
-        laporanBtn = new javax.swing.JButton();
+        omniBtn = new javax.swing.JButton();
+        bcBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,9 +49,8 @@ public class SuperAdminHome extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(0, 53, 181));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Ten Vape Labs");
+        usrlabel.setForeground(new java.awt.Color(255, 255, 255));
+        usrlabel.setText("Hi, Username!");
 
         logoutBtn.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         logoutBtn.setText("Logout");
@@ -63,65 +60,60 @@ public class SuperAdminHome extends javax.swing.JFrame {
             }
         });
 
-        usrlabel.setForeground(new java.awt.Color(255, 255, 255));
-        usrlabel.setText("Hi, Username!");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Ten Vape Labs");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(jLabel1)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(logoutBtn, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(usrlabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(logoutBtn)
+                    .addComponent(usrlabel))
                 .addGap(25, 25, 25))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
-                .addComponent(usrlabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(logoutBtn)
-                .addGap(28, 28, 28))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(usrlabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(logoutBtn)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
-
-        broadcastBtn.setBackground(new java.awt.Color(0, 53, 181));
-        broadcastBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        broadcastBtn.setForeground(new java.awt.Color(255, 255, 255));
-        broadcastBtn.setText("Broadcast");
-
-        persetujuanBtn.setBackground(new java.awt.Color(0, 53, 181));
-        persetujuanBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        persetujuanBtn.setForeground(new java.awt.Color(255, 255, 255));
-        persetujuanBtn.setText("Persetujuan");
-
-        userBtn.setBackground(new java.awt.Color(0, 53, 181));
-        userBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        userBtn.setForeground(new java.awt.Color(255, 255, 255));
-        userBtn.setText("User");
-        userBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userBtnActionPerformed(evt);
-            }
-        });
 
         dataBtn.setBackground(new java.awt.Color(0, 53, 181));
         dataBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         dataBtn.setForeground(new java.awt.Color(255, 255, 255));
         dataBtn.setText("Data Pelanggan");
+        dataBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dataBtnActionPerformed(evt);
+            }
+        });
 
-        laporanBtn.setBackground(new java.awt.Color(0, 53, 181));
-        laporanBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        laporanBtn.setForeground(new java.awt.Color(255, 255, 255));
-        laporanBtn.setText("Laporan");
+        omniBtn.setBackground(new java.awt.Color(0, 53, 181));
+        omniBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        omniBtn.setForeground(new java.awt.Color(255, 255, 255));
+        omniBtn.setText("Omnichannel");
+
+        bcBtn.setBackground(new java.awt.Color(0, 53, 181));
+        bcBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        bcBtn.setForeground(new java.awt.Color(255, 255, 255));
+        bcBtn.setText("Broadcast");
+        bcBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bcBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -129,35 +121,25 @@ public class SuperAdminHome extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(169, 169, 169)
-                .addComponent(broadcastBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(124, 124, 124)
-                .addComponent(persetujuanBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(userBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
+                .addContainerGap(85, Short.MAX_VALUE)
+                .addComponent(omniBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
                 .addComponent(dataBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                .addComponent(laporanBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100))
+                .addGap(50, 50, 50)
+                .addComponent(bcBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(84, 84, 84))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(broadcastBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(persetujuanBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(65, 65, 65)
+                .addGap(125, 125, 125)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(laporanBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(omniBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(userBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bcBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(dataBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 172, Short.MAX_VALUE))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -187,12 +169,16 @@ public class SuperAdminHome extends javax.swing.JFrame {
         Login login = new Login();
         login.setVisible(true);
          dispose();
-}    
+}
     }//GEN-LAST:event_logoutBtnActionPerformed
 
-    private void userBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userBtnActionPerformed
-    new SuperAdminUser("superadmin").setVisible(true); 
-    }//GEN-LAST:event_userBtnActionPerformed
+    private void bcBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bcBtnActionPerformed
+
+    private void dataBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dataBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -211,34 +197,32 @@ public class SuperAdminHome extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SuperAdminHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SuperAdminHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SuperAdminHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SuperAdminHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SuperAdminHome().setVisible(true);
+                new AdminHome().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton broadcastBtn;
+    private javax.swing.JButton bcBtn;
     private javax.swing.JButton dataBtn;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JButton laporanBtn;
     private javax.swing.JButton logoutBtn;
-    private javax.swing.JButton persetujuanBtn;
-    private javax.swing.JButton userBtn;
+    private javax.swing.JButton omniBtn;
     private javax.swing.JLabel usrlabel;
     // End of variables declaration//GEN-END:variables
 }

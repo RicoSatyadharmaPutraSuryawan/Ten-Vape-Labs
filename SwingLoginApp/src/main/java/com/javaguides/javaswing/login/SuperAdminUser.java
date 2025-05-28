@@ -27,11 +27,112 @@ public class SuperAdminUser extends javax.swing.JFrame {
     
     public SuperAdminUser(String username) {
     initComponents();
+    setLocationRelativeTo(null);
+    addBtn.addActionListener(e -> addUser());
+    editBtn.addActionListener(e -> editUser());
+    deleteBtn.addActionListener(e -> deleteUser());
+    refreshBtn.addActionListener(e -> loadUserData());
     connectToDatabase(); // Connect to database when the form is created
     model = (DefaultTableModel) jTable1.getModel();
     userTable = jTable1; // Assign jTable1 to userTable
     loadUserData(); // Load data initially
 }
+    
+    private void addUser() {
+        String username = JOptionPane.showInputDialog(this, "Masukkan username:");
+        String password = JOptionPane.showInputDialog(this, "Masukkan password:");
+        String role = JOptionPane.showInputDialog(this, "Masukkan role (admin/superadmin):");
+
+        if (username != null && password != null && role != null &&
+            !username.isEmpty() && !password.isEmpty() && !role.isEmpty()) {
+            try {
+                String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setString(1, username);
+                stmt.setString(2, password);
+                stmt.setString(3, role);
+                stmt.executeUpdate();
+                loadUserData();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Gagal menambah user.");
+            }
+        }
+    }
+
+    private void editUser() {
+        int row = userTable.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih user yang ingin di-edit.");
+            return;
+        }
+
+        int id = (int) model.getValueAt(row, 0);
+        String currentUsername = (String) model.getValueAt(row, 1);
+        String currentRole = (String) model.getValueAt(row, 2);
+
+        String username = JOptionPane.showInputDialog(this, "Edit username:", currentUsername);
+        String role = JOptionPane.showInputDialog(this, "Edit role:", currentRole);
+
+        if (username != null && role != null) {
+            try {
+                String sql = "UPDATE users SET username = ?, role = ? WHERE id = ?";
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setString(1, username);
+                stmt.setString(2, role);
+                stmt.setInt(3, id);
+                stmt.executeUpdate();
+                loadUserData();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Gagal mengedit user.");
+            }
+        }
+    }
+
+    private void deleteUser() {
+        int row = userTable.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih user yang ingin dihapus.");
+            return;
+        }
+
+        int id = (int) model.getValueAt(row, 0);
+        int confirm = JOptionPane.showConfirmDialog(this, "Apakah yakin ingin menghapus user ini?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                String sql = "DELETE FROM users WHERE id = ?";
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setInt(1, id);
+                stmt.executeUpdate();
+                loadUserData();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Gagal menghapus user.");
+            }
+        }
+    }
+
+     private void loadUserData() {
+        try {
+            model.setRowCount(0);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getInt("id"),
+                    rs.getString("username"),
+                    rs.getString("role")
+                };
+                model.addRow(row);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Gagal memuat data user.");
+        }
+    }
 
     SuperAdminUser() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -339,7 +440,7 @@ public class SuperAdminUser extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void homeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeBtnActionPerformed
-        // TODO add your handling code here:
+    new SuperAdminHome("superadmin").setVisible(true);    
     }//GEN-LAST:event_homeBtnActionPerformed
 
     private void broadcastBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_broadcastBtnActionPerformed
@@ -375,16 +476,30 @@ public class SuperAdminUser extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void refreshBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBtnActionPerformed
-        // TODO add your handling code here:
+        loadUserData();
     }//GEN-LAST:event_refreshBtnActionPerformed
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
-        // TODO add your handling code here:
+        int pilihan = JOptionPane.showConfirmDialog(
+    null,
+    "Apakah Anda ingin logout?",
+    "Logout",
+    JOptionPane.OK_CANCEL_OPTION,
+    JOptionPane.WARNING_MESSAGE
+);
+        
+    if (pilihan == JOptionPane.OK_OPTION) {
+        Login login = new Login();
+        login.setVisible(true);
+         dispose();
+}
     }//GEN-LAST:event_logoutBtnActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            new SuperAdminUser("Admin").setVisible(true);
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
@@ -407,94 +522,4 @@ public class SuperAdminUser extends javax.swing.JFrame {
     private javax.swing.JButton refreshBtn;
     private javax.swing.JButton userBtn;
     // End of variables declaration//GEN-END:variables
-
-    private void loadUserData() {
-        model.setRowCount(0);
-        try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT id, username, role FROM users");
-            while (rs.next()) {
-                model.addRow(new Object[]{rs.getInt("id"), rs.getString("username"), rs.getString("role")});
-            }
-            rs.close();
-            stmt.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void addUser() {
-        String username = JOptionPane.showInputDialog(this, "Enter username:");
-        String password = JOptionPane.showInputDialog(this, "Enter password:");
-        String[] roles = {"admin", "user"};
-        String role = (String) JOptionPane.showInputDialog(this, "Select role:", "Role",
-                JOptionPane.PLAIN_MESSAGE, null, roles, "user");
-
-        if (username != null && password != null && role != null) {
-            try {
-                PreparedStatement pst = conn.prepareStatement("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
-                pst.setString(1, username);
-                pst.setString(2, password);
-                pst.setString(3, role);
-                pst.executeUpdate();
-                pst.close();
-                loadUserData();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void editUser() {
-        int selectedRow = userTable.getSelectedRow();
-        if (selectedRow >= 0) {
-            int id = (int) model.getValueAt(selectedRow, 0);
-            String newUsername = JOptionPane.showInputDialog(this, "Enter new username:", model.getValueAt(selectedRow, 1));
-            String[] roles = {"admin", "user"};
-            String newRole = (String) JOptionPane.showInputDialog(this, "Select new role:", "Role",
-                    JOptionPane.PLAIN_MESSAGE, null, roles, model.getValueAt(selectedRow, 2));
-
-            if (newUsername != null && newRole != null) {
-                try {
-                    PreparedStatement pst = conn.prepareStatement("UPDATE users SET username = ?, role = ? WHERE id = ?");
-                    pst.setString(1, newUsername);
-                    pst.setString(2, newRole);
-                    pst.setInt(3, id);
-                    pst.executeUpdate();
-                    pst.close();
-                    loadUserData();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Please select a user to edit.");
-        }
-    }
-
-    private void deleteUser() {
-        int selectedRow = userTable.getSelectedRow();
-        if (selectedRow >= 0) {
-            int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this user?", "Confirm", JOptionPane.YES_NO_OPTION);
-            if (confirm == JOptionPane.YES_OPTION) {
-                int id = (int) model.getValueAt(selectedRow, 0);
-                try {
-                    PreparedStatement pst = conn.prepareStatement("DELETE FROM users WHERE id = ?");
-                    pst.setInt(1, id);
-                    pst.executeUpdate();
-                    pst.close();
-                    loadUserData();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Please select a user to delete.");
-        }
-    }
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new SuperAdminUser("Admin").setVisible(true);
-        });
-    }
 }
