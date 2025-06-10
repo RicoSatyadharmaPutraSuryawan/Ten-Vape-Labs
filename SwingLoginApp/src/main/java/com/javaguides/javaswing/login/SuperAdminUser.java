@@ -444,7 +444,10 @@ public class SuperAdminUser extends javax.swing.JFrame {
     }//GEN-LAST:event_homeBtnActionPerformed
 
     private void broadcastBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_broadcastBtnActionPerformed
-        // TODO add your handling code here:
+        SuperAdminBroadcast SuperAdminBroadcastframe = new SuperAdminBroadcast();
+           SuperAdminBroadcastframe.setVisible(true);
+
+           this.dispose();
     }//GEN-LAST:event_broadcastBtnActionPerformed
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
@@ -456,19 +459,28 @@ public class SuperAdminUser extends javax.swing.JFrame {
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void persetujuanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_persetujuanBtnActionPerformed
-        // TODO add your handling code here:
+        SuperAdminPersetujuan SuperAdminPersetujuanframe = new SuperAdminPersetujuan();
+           SuperAdminPersetujuanframe.setVisible(true);
+
+           this.dispose();
     }//GEN-LAST:event_persetujuanBtnActionPerformed
 
     private void userBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userBtnActionPerformed
-        // TODO add your handling code here:
+        new SuperAdminUser("superadmin").setVisible(true);
     }//GEN-LAST:event_userBtnActionPerformed
 
     private void dataBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataBtnActionPerformed
-        // TODO add your handling code here:
+        SuperAdminData SuperAdminDataframe = new SuperAdminData();
+           SuperAdminDataframe.setVisible(true);
+
+           this.dispose();
     }//GEN-LAST:event_dataBtnActionPerformed
 
     private void laporanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laporanBtnActionPerformed
-        // TODO add your handling code here:
+        SuperAdminLaporan SuperAdminLaporanframe = new SuperAdminLaporan();
+           SuperAdminLaporanframe.setVisible(true);
+
+           this.dispose();
     }//GEN-LAST:event_laporanBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
@@ -497,7 +509,7 @@ public class SuperAdminUser extends javax.swing.JFrame {
 
 public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new SuperAdminUser("Admin").setVisible(true);
+            new SuperAdminUser("superadmin").setVisible(true);
         });
     }
 

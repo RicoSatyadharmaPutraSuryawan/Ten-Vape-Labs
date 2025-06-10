@@ -170,6 +170,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Broadcast"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="broadcastBtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="persetujuanBtn">
           <Properties>
@@ -184,6 +187,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Persetujuan"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="persetujuanBtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="userBtn">
           <Properties>
@@ -215,6 +221,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Data Pelanggan"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dataBtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="laporanBtn">
           <Properties>
@@ -229,6 +238,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Laporan"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="laporanBtnActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

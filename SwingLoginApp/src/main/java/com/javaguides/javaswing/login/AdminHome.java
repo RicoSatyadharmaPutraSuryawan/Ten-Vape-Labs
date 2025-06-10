@@ -104,6 +104,11 @@ public class AdminHome extends javax.swing.JFrame {
         omniBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         omniBtn.setForeground(new java.awt.Color(255, 255, 255));
         omniBtn.setText("Omnichannel");
+        omniBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                omniBtnActionPerformed(evt);
+            }
+        });
 
         bcBtn.setBackground(new java.awt.Color(0, 53, 181));
         bcBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -173,12 +178,26 @@ public class AdminHome extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void bcBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcBtnActionPerformed
-        // TODO add your handling code here:
+        AdminBroadcast AdminBroadcastframe = new AdminBroadcast();
+           AdminBroadcastframe.setVisible(true);
+
+           this.dispose();
     }//GEN-LAST:event_bcBtnActionPerformed
 
     private void dataBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataBtnActionPerformed
-        // TODO add your handling code here:
+        AdminData AdminDataframe = new AdminData();
+           AdminDataframe.setVisible(true);
+
+           this.dispose();
     }//GEN-LAST:event_dataBtnActionPerformed
+
+    private void omniBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_omniBtnActionPerformed
+        AdminOmnichannel AdminOmnichannelframe = new AdminOmnichannel();
+           AdminOmnichannelframe.setVisible(true);
+
+           this.dispose();
+ 
+    }//GEN-LAST:event_omniBtnActionPerformed
 
     /**
      * @param args the command line arguments
