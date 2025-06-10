@@ -97,11 +97,21 @@ public class SuperAdminHome extends javax.swing.JFrame {
         broadcastBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         broadcastBtn.setForeground(new java.awt.Color(255, 255, 255));
         broadcastBtn.setText("Broadcast");
+        broadcastBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                broadcastBtnActionPerformed(evt);
+            }
+        });
 
         persetujuanBtn.setBackground(new java.awt.Color(0, 53, 181));
         persetujuanBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         persetujuanBtn.setForeground(new java.awt.Color(255, 255, 255));
         persetujuanBtn.setText("Persetujuan");
+        persetujuanBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                persetujuanBtnActionPerformed(evt);
+            }
+        });
 
         userBtn.setBackground(new java.awt.Color(0, 53, 181));
         userBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -117,11 +127,21 @@ public class SuperAdminHome extends javax.swing.JFrame {
         dataBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         dataBtn.setForeground(new java.awt.Color(255, 255, 255));
         dataBtn.setText("Data Pelanggan");
+        dataBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dataBtnActionPerformed(evt);
+            }
+        });
 
         laporanBtn.setBackground(new java.awt.Color(0, 53, 181));
         laporanBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         laporanBtn.setForeground(new java.awt.Color(255, 255, 255));
         laporanBtn.setText("Laporan");
+        laporanBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                laporanBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -193,6 +213,34 @@ public class SuperAdminHome extends javax.swing.JFrame {
     private void userBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userBtnActionPerformed
     new SuperAdminUser("superadmin").setVisible(true); 
     }//GEN-LAST:event_userBtnActionPerformed
+
+    private void broadcastBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_broadcastBtnActionPerformed
+        SuperAdminBroadcast SuperAdminBroadcastframe = new SuperAdminBroadcast();
+           SuperAdminBroadcastframe.setVisible(true);
+
+           this.dispose();
+    }//GEN-LAST:event_broadcastBtnActionPerformed
+
+    private void persetujuanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_persetujuanBtnActionPerformed
+        SuperAdminPersetujuan SuperAdminPersetujuanframe = new SuperAdminPersetujuan();
+           SuperAdminPersetujuanframe.setVisible(true);
+
+           this.dispose();
+    }//GEN-LAST:event_persetujuanBtnActionPerformed
+
+    private void dataBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataBtnActionPerformed
+        SuperAdminData SuperAdminDataframe = new SuperAdminData();
+           SuperAdminDataframe.setVisible(true);
+
+           this.dispose();
+    }//GEN-LAST:event_dataBtnActionPerformed
+
+    private void laporanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laporanBtnActionPerformed
+        SuperAdminLaporan SuperAdminLaporanframe = new SuperAdminLaporan();
+           SuperAdminLaporanframe.setVisible(true);
+
+           this.dispose();
+    }//GEN-LAST:event_laporanBtnActionPerformed
 
     /**
      * @param args the command line arguments

@@ -4,6 +4,8 @@
  */
 package com.javaguides.javaswing.login;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author faydz
@@ -15,6 +17,7 @@ public class SuperAdminBroadcast extends javax.swing.JFrame {
      */
     public SuperAdminBroadcast() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -57,6 +60,11 @@ public class SuperAdminBroadcast extends javax.swing.JFrame {
 
         jButton7.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jButton7.setText("Logout");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -210,28 +218,56 @@ public class SuperAdminBroadcast extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        new SuperAdminHome("superadmin").setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        SuperAdminBroadcast SuperAdminBroadcastframe = new SuperAdminBroadcast();
+           SuperAdminBroadcastframe.setVisible(true);
+
+           this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        SuperAdminPersetujuan SuperAdminPersetujuanframe = new SuperAdminPersetujuan();
+           SuperAdminPersetujuanframe.setVisible(true);
+
+           this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        new SuperAdminUser("superadmin").setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        SuperAdminData SuperAdminDataframe = new SuperAdminData();
+           SuperAdminDataframe.setVisible(true);
+
+           this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        SuperAdminLaporan SuperAdminLaporanframe = new SuperAdminLaporan();
+           SuperAdminLaporanframe.setVisible(true);
+
+           this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        int pilihan = JOptionPane.showConfirmDialog(
+    null,
+    "Apakah Anda ingin logout?",
+    "Logout",
+    JOptionPane.OK_CANCEL_OPTION,
+    JOptionPane.WARNING_MESSAGE
+);
+        
+    if (pilihan == JOptionPane.OK_OPTION) {
+        Login login = new Login();
+        login.setVisible(true);
+         dispose();
+}
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
