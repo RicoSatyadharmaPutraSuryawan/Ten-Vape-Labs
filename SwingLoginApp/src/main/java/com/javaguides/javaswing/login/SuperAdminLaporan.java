@@ -241,7 +241,7 @@ public class SuperAdminLaporan extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Showcard Gothic", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("DATA PELANGGAN");
+        jLabel1.setText("LAPORAN");
 
         logoutBtn.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         logoutBtn.setText("Logout");
