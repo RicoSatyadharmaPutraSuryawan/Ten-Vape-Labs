@@ -211,7 +211,8 @@ public class SuperAdminHome extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void userBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userBtnActionPerformed
-    new SuperAdminUser("superadmin").setVisible(true); 
+    new SuperAdminUser("superadmin").setVisible(true);
+    this.dispose();
     }//GEN-LAST:event_userBtnActionPerformed
 
     private void broadcastBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_broadcastBtnActionPerformed

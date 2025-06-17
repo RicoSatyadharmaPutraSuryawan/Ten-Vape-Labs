@@ -4,17 +4,14 @@
  */
 package com.javaguides.javaswing.login;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author faydz
  */
-public class AdminOmnichannel extends javax.swing.JFrame {
-
-    /**
-     * Creates new form AdminUser
-     */
+public class AdminOmnichannel extends JFrame {
     public AdminOmnichannel() {
         initComponents();
         setLocationRelativeTo(null);
@@ -580,7 +577,8 @@ public class AdminOmnichannel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new AdminHome("admin").setVisible(true); 
+        new AdminHome("admin").setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed

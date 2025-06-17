@@ -4,7 +4,21 @@
  */
 package com.javaguides.javaswing.login;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Vector;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -12,12 +26,200 @@ import javax.swing.JOptionPane;
  */
 public class AdminData extends javax.swing.JFrame {
 
+    // Mendapatkan model dari JTable untuk manipulasi data
+    private final DefaultTableModel model;
+
     /**
      * Creates new form AdminData
      */
     public AdminData() {
         initComponents();
+        // Mengambil model dari JTable setelah initComponents() dipanggil
+        this.model = (DefaultTableModel) customerTable.getModel();
         setLocationRelativeTo(null);
+
+        // Menambahkan Action Listeners untuk setiap tombol
+        loadExcelBtn.addActionListener(e -> loadExcelData());
+        saveExcelBtn.addActionListener(e -> saveExcelData());
+        addBtn.addActionListener(e -> addData());
+        updateBtn.addActionListener(e -> updateData());
+        deleteBtn.addActionListener(e -> deleteData());
+    }
+    
+    private void loadExcelData() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Excel Files", "xlsx"));
+        
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            ExcelReader excelReader = new ExcelReader(file);
+            try {
+                Vector<Vector<Object>> data = excelReader.readExcelData();
+                
+                // Membersihkan data dan kolom yang ada di tabel
+                model.setRowCount(0);
+                model.setColumnCount(0);
+                
+                // Menambahkan header (kolom) ke model tabel
+                if (!data.isEmpty()) {
+                    Vector<Object> header = data.get(0);
+                    for (Object column : header) {
+                        model.addColumn(column.toString());
+                    }
+                    // Menambahkan baris data ke model tabel
+                    for (int i = 1; i < data.size(); i++) {
+                        model.addRow(data.get(i));
+                    }
+                }
+
+                JOptionPane.showMessageDialog(this, "Data berhasil dimuat dari file Excel.");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Gagal memuat file: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void saveExcelData() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Excel Files", "xlsx"));
+        
+        int result = fileChooser.showSaveDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            // Pastikan file memiliki ekstensi .xlsx
+            if (!file.getName().toLowerCase().endsWith(".xlsx")) {
+                file = new File(file.getParentFile(), file.getName() + ".xlsx");
+            }
+            
+            try (FileOutputStream fos = new FileOutputStream(file);
+                 Workbook workbook = new XSSFWorkbook()) {
+                
+                Sheet sheet = workbook.createSheet("Customer Data");
+                int rowCount = model.getRowCount();
+                int colCount = model.getColumnCount();
+
+                // Menulis header
+                Row headerRow = sheet.createRow(0);
+                for (int i = 0; i < colCount; i++) {
+                    Cell cell = headerRow.createCell(i);
+                    cell.setCellValue(model.getColumnName(i));
+                }
+
+                // Menulis baris data
+                for (int i = 0; i < rowCount; i++) {
+                    Row row = sheet.createRow(i + 1);
+                    for (int j = 0; j < colCount; j++) {
+                        Cell cell = row.createCell(j);
+                        Object value = model.getValueAt(i, j);
+                        // Menggunakan String.valueOf untuk menghindari NullPointerException dan ClassCastException
+                        cell.setCellValue(String.valueOf(value));
+                    }
+                }
+
+                workbook.write(fos);
+                JOptionPane.showMessageDialog(this, "Data berhasil disimpan ke " + file.getName());
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Gagal menyimpan file: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void addData() {
+        Vector<String> newRow = new Vector<>();
+        int colCount = model.getColumnCount();
+        for (int i = 0; i < colCount; i++) {
+            String value = JOptionPane.showInputDialog(this, "Masukkan data untuk kolom: " + model.getColumnName(i));
+            newRow.add(value);
+        }
+        // Menambah baris ke model, bukan ke JTable
+        model.addRow(newRow);
+    }
+
+    private void updateData() {
+        int selectedRow = customerTable.getSelectedRow();
+        if (selectedRow >= 0) {
+            int colCount = model.getColumnCount();
+            for (int i = 0; i < colCount; i++) {
+                String updatedValue = JOptionPane.showInputDialog(this, "Masukkan nilai baru untuk " + model.getColumnName(i),
+                        model.getValueAt(selectedRow, i));
+                if (updatedValue != null) {
+                    // setValueAt bisa dipanggil di JTable atau modelnya
+                    model.setValueAt(updatedValue, selectedRow, i);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Pilih baris yang ingin diupdate.");
+        }
+    }
+
+    private void deleteData() {
+        int selectedRow = customerTable.getSelectedRow();
+        if (selectedRow >= 0) {
+            int confirm = JOptionPane.showConfirmDialog(this, "Anda yakin ingin menghapus baris ini?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
+            if(confirm == JOptionPane.YES_OPTION) {
+                // Menghapus baris dari model, bukan dari JTable
+                model.removeRow(selectedRow);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Pilih baris yang ingin dihapus.");
+        }
+    }
+
+    // Inner class untuk menangani pembacaan file Excel
+    private static class ExcelReader {
+        private final File file;
+        private final DataFormatter dataFormatter; // Gunakan DataFormatter untuk hasil yang konsisten
+
+        public ExcelReader(File file) {
+            this.file = file;
+            this.dataFormatter = new DataFormatter();
+        }
+
+        public Vector<Vector<Object>> readExcelData() throws IOException {
+            Vector<Vector<Object>> data = new Vector<>();
+            
+            try (FileInputStream fis = new FileInputStream(file);
+                 Workbook workbook = new XSSFWorkbook(fis)) {
+
+                Sheet sheet = workbook.getSheetAt(0);
+                
+                // Mendapatkan header terlebih dahulu
+                Row headerRow = sheet.getRow(0);
+                if (headerRow == null) throw new IOException("File Excel kosong atau tidak memiliki header.");
+                
+                Vector<Object> header = new Vector<>();
+                for (Cell cell : headerRow) {
+                    header.add(getCellValue(cell));
+                }
+                data.add(header);
+                
+                // Membaca sisa data berdasarkan jumlah kolom di header
+                int numCols = header.size();
+                for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+                    Row row = sheet.getRow(i);
+                    if (row == null) continue; // Lewati baris kosong
+                    
+                    Vector<Object> rowData = new Vector<>();
+                    for (int j = 0; j < numCols; j++) {
+                        // Gunakan getCell dengan policy agar sel kosong tidak menyebabkan error
+                        Cell cell = row.getCell(j, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                        rowData.add(getCellValue(cell));
+                    }
+                    data.add(rowData);
+                }
+            }
+            return data;
+        }
+
+        private String getCellValue(Cell cell) {
+            if (cell == null) {
+                return "";
+            }
+            // DataFormatter akan menangani semua tipe sel (string, numerik, formula, boolean, dll)
+            // dan mengembalikan nilainya sebagai String seperti yang ditampilkan di Excel.
+            return dataFormatter.formatCellValue(cell);
+        }
     }
 
     /**
@@ -26,7 +228,7 @@ public class AdminData extends javax.swing.JFrame {
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -39,13 +241,13 @@ public class AdminData extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        loadExcelBtn = new javax.swing.JButton();
+        saveExcelBtn = new javax.swing.JButton();
+        addBtn = new javax.swing.JButton();
+        updateBtn = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
+        customerTableScrollPane = new javax.swing.JScrollPane();
+        customerTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -152,43 +354,40 @@ public class AdminData extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton6.setBackground(new java.awt.Color(0, 53, 181));
-        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Muat Data");
+        loadExcelBtn.setBackground(new java.awt.Color(0, 53, 181));
+        loadExcelBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        loadExcelBtn.setForeground(new java.awt.Color(255, 255, 255));
+        loadExcelBtn.setText("Muat Data");
 
-        jButton7.setBackground(new java.awt.Color(0, 53, 181));
-        jButton7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Simpan Data");
+        saveExcelBtn.setBackground(new java.awt.Color(0, 53, 181));
+        saveExcelBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        saveExcelBtn.setForeground(new java.awt.Color(255, 255, 255));
+        saveExcelBtn.setText("Simpan Data");
 
-        jButton8.setBackground(new java.awt.Color(0, 53, 181));
-        jButton8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Tambah Data");
+        addBtn.setBackground(new java.awt.Color(0, 53, 181));
+        addBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        addBtn.setForeground(new java.awt.Color(255, 255, 255));
+        addBtn.setText("Tambah Data");
 
-        jButton9.setBackground(new java.awt.Color(0, 53, 181));
-        jButton9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("Update Data");
+        updateBtn.setBackground(new java.awt.Color(0, 53, 181));
+        updateBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        updateBtn.setForeground(new java.awt.Color(255, 255, 255));
+        updateBtn.setText("Update Data");
 
-        jButton10.setBackground(new java.awt.Color(0, 53, 181));
-        jButton10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton10.setForeground(new java.awt.Color(255, 255, 255));
-        jButton10.setText("Hapus Data");
+        deleteBtn.setBackground(new java.awt.Color(0, 53, 181));
+        deleteBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        deleteBtn.setForeground(new java.awt.Color(255, 255, 255));
+        deleteBtn.setText("Hapus Data");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        customerTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        customerTableScrollPane.setViewportView(customerTable);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -196,29 +395,29 @@ public class AdminData extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton6)
+                .addComponent(loadExcelBtn)
                 .addGap(18, 18, 18)
-                .addComponent(jButton7)
+                .addComponent(saveExcelBtn)
                 .addGap(18, 18, 18)
-                .addComponent(jButton8)
+                .addComponent(addBtn)
                 .addGap(18, 18, 18)
-                .addComponent(jButton9)
+                .addComponent(updateBtn)
                 .addGap(18, 18, 18)
-                .addComponent(jButton10)
+                .addComponent(deleteBtn)
                 .addGap(25, 25, 25))
-            .addComponent(jScrollPane1)
+            .addComponent(customerTableScrollPane)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                .addComponent(customerTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6)
-                    .addComponent(jButton7)
-                    .addComponent(jButton8)
-                    .addComponent(jButton9)
-                    .addComponent(jButton10))
+                    .addComponent(loadExcelBtn)
+                    .addComponent(saveExcelBtn)
+                    .addComponent(addBtn)
+                    .addComponent(updateBtn)
+                    .addComponent(deleteBtn))
                 .addGap(17, 17, 17))
         );
 
@@ -254,48 +453,49 @@ public class AdminData extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        new AdminHome("admin").setVisible(true); 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        new AdminHome("admin").setVisible(true);
+        this.dispose();
+    }                                        
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         int pilihan = JOptionPane.showConfirmDialog(
-    null,
-    "Apakah Anda ingin logout?",
-    "Logout",
-    JOptionPane.OK_CANCEL_OPTION,
-    JOptionPane.WARNING_MESSAGE
-);
-        
-    if (pilihan == JOptionPane.OK_OPTION) {
-        Login login = new Login();
-        login.setVisible(true);
-         dispose();
-}
-    }//GEN-LAST:event_jButton1ActionPerformed
+            null,
+            "Apakah Anda ingin logout?",
+            "Logout",
+            JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.WARNING_MESSAGE
+        );
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if (pilihan == JOptionPane.OK_OPTION) {
+            Login login = new Login();
+            login.setVisible(true);
+            dispose();
+        }
+    }                                        
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         AdminOmnichannel AdminOmnichannelframe = new AdminOmnichannel();
-           AdminOmnichannelframe.setVisible(true);
+        AdminOmnichannelframe.setVisible(true);
 
-           this.dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
+        this.dispose();
+    }                                        
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         AdminData AdminDataframe = new AdminData();
-           AdminDataframe.setVisible(true);
+        AdminDataframe.setVisible(true);
 
-           this.dispose();
-    }//GEN-LAST:event_jButton4ActionPerformed
+        this.dispose();
+    }                                        
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         AdminBroadcast AdminBroadcastframe = new AdminBroadcast();
-           AdminBroadcastframe.setVisible(true);
+        AdminBroadcastframe.setVisible(true);
 
-           this.dispose();
-    }//GEN-LAST:event_jButton5ActionPerformed
+        this.dispose();
+    }                                        
 
     /**
      * @param args the command line arguments
@@ -332,23 +532,23 @@ public class AdminData extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton addBtn;
+    private javax.swing.JTable customerTable;
+    private javax.swing.JScrollPane customerTableScrollPane;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    // End of variables declaration//GEN-END:variables
+    private javax.swing.JButton loadExcelBtn;
+    private javax.swing.JButton saveExcelBtn;
+    private javax.swing.JButton updateBtn;
+    // End of variables declaration                   
 }

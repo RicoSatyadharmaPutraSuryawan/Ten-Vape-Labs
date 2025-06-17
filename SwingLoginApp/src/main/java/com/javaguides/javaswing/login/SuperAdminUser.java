@@ -440,7 +440,8 @@ public class SuperAdminUser extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void homeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeBtnActionPerformed
-    new SuperAdminHome("superadmin").setVisible(true);    
+    new SuperAdminHome("superadmin").setVisible(true);
+    this.dispose();
     }//GEN-LAST:event_homeBtnActionPerformed
 
     private void broadcastBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_broadcastBtnActionPerformed
