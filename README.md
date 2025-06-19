@@ -51,12 +51,9 @@
 ## 👑 Role & Akses
 
 | Role                 | Deskripsi                                                                 |
-|----------------------|--------------------------------------------------------------------------|
+|----------------------|---------------------------------------------------------------------------|
 | **Super Admin (Owner)** | Akses penuh untuk mengelola seluruh data dan fitur                     |
-| **CRM & Omnichannel**   | Kelola interaksi pelanggan dan pantau semua channel penjualan          |
-| **CRM Interface**       | Menyimpan & mengelola riwayat komunikasi pelanggan                      |
-| **CRM Messenger**       | Sistem pesan internal dan eksternal (termasuk promosi ke pelanggan)    |
-| **Omnichannel Interface** | Integrasi pemantauan pesanan dari WhatsApp, Instagram, Email, dll    |
+| **Admin (Pegawai**      | Akses untuk Omnichanel dan mengelola data pelanggan                    |
 
 ---
 
