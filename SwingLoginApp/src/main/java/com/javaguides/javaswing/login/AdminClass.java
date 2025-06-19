@@ -121,25 +121,7 @@ public class AdminClass {
         return null;
     }
 
-    // Cari admin berdasarkan username
-    public static AdminClass cariAdmin(String username) {
-        for (AdminClass admin : daftarAdmin) {
-            if (admin.getUsername().equalsIgnoreCase(username)) {
-                return admin;
-            }
-        }
-        return null;
-    }
-
-    // Nonaktifkan admin
-    public static boolean nonaktifkanAdmin(String username) {
-        AdminClass admin = cariAdmin(username);
-        if (admin != null) {
-            admin.setActive(false);
-            return true;
-        }
-        return false;
-    }
+   
 
     // Cetak info admin
     public void cetakInfo() {
