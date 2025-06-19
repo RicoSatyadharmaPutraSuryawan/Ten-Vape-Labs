@@ -53,7 +53,7 @@
 | Role                 | Deskripsi                                                                 |
 |----------------------|---------------------------------------------------------------------------|
 | **Super Admin (Owner)** | Akses penuh untuk mengelola seluruh data dan fitur                     |
-| **Admin (Pegawai**      | Akses untuk Omnichanel dan mengelola data pelanggan                    |
+| **Admin (Pegawai)**      | Akses untuk Omnichanel dan mengelola data pelanggan                   |
 
 ---
 
